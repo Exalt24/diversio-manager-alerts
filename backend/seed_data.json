@@ -1,0 +1,30 @@
+{
+  "employees": [
+    {"id":"E1","name":"Taylor Reed","reports_to":null},
+    {"id":"E2","name":"Alex Morgan","reports_to":"E1"},
+    {"id":"E3","name":"Jordan Lee","reports_to":"E2"},
+    {"id":"E4","name":"Casey Kim","reports_to":"E2"},
+    {"id":"E5","name":"Riley Chen","reports_to":"E3"},
+    {"id":"E6","name":"Sam Patel","reports_to":"E7"},
+    {"id":"E7","name":"Jamie Singh","reports_to":"E8"},
+    {"id":"E8","name":"Morgan Diaz","reports_to":"E6"},
+    {"id":"E9","name":"Avery Brooks","reports_to":"E2"},
+    {"id":"E10","name":"Quinn Park","reports_to":"E9"}
+  ],
+  "alerts": [
+    {"id":"A1","employee_id":"E3","severity":"high","category":"retention","created_at":"2025-09-01T09:00:00Z","status":"open"},
+    {"id":"A2","employee_id":"E4","severity":"medium","category":"engagement","created_at":"2025-09-02T09:00:00Z","status":"open"},
+    {"id":"A3","employee_id":"E5","severity":"low","category":"workload","created_at":"2025-09-03T09:00:00Z","status":"open"},
+    {"id":"A4","employee_id":"E5","severity":"high","category":"retention","created_at":"2025-09-04T09:00:00Z","status":"open"},
+    {"id":"A5","employee_id":"E9","severity":"medium","category":"engagement","created_at":"2025-09-05T09:00:00Z","status":"open"},
+    {"id":"A6","employee_id":"E10","severity":"high","category":"retention","created_at":"2025-09-06T09:00:00Z","status":"dismissed"},
+    {"id":"A7","employee_id":"E3","severity":"low","category":"workload","created_at":"2025-09-07T09:00:00Z","status":"open"},
+    {"id":"A8","employee_id":"E6","severity":"medium","category":"engagement","created_at":"2025-09-08T09:00:00Z","status":"open"},
+    {"id":"A9","employee_id":"E7","severity":"high","category":"retention","created_at":"2025-09-09T09:00:00Z","status":"open"},
+    {"id":"A10","employee_id":"E8","severity":"low","category":"workload","created_at":"2025-09-10T09:00:00Z","status":"open"},
+    {"id":"A11","employee_id":"E4","severity":"high","category":"retention","created_at":"2025-09-11T09:00:00Z","status":"open"},
+    {"id":"A12","employee_id":"E9","severity":"low","category":"workload","created_at":"2025-09-12T09:00:00Z","status":"open"},
+    {"id":"A13","employee_id":"E10","severity":"medium","category":"engagement","created_at":"2025-09-13T09:00:00Z","status":"open"},
+    {"id":"A14","employee_id":"E2","severity":"low","category":"workload","created_at":"2025-09-14T09:00:00Z","status":"open"}
+  ]
+}
