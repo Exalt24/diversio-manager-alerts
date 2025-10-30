@@ -380,32 +380,41 @@ Using seed data with 10 employees and 14 alerts:
 
 ## How I Used AI/LLMs
 
-**AI-Assisted (with validation):**
-- Django project boilerplate and initial settings
-- TypeScript type definitions and interfaces
-- Tailwind CSS class suggestions for dark theme
+**What AI Helped With:**
+- Django project boilerplate and settings configuration
+- TypeScript type definitions and interfaces  
+- Tailwind CSS styling and dark theme classes
 - Test case structure and pytest fixtures
-- Deployment configuration files (build.sh, environment variables)
-- README structure and markdown formatting
+- Deployment configuration (build.sh, environment variables)
+- Code cleanup and formatting (refactoring, removing redundancy)
+- README structure and technical writing
+- Debugging suggestions for CORS and deployment issues
 
-**Human-Written (with research):**
-- **Tree traversal algorithm** - Core BFS logic with cycle detection written from scratch
-- **API endpoint validation** - All parameter validation, filtering, sorting logic
-- **Filter state management** - URL sync with react-router-dom
-- **Optimistic update pattern** - UI update, API call, rollback logic
-- **All test assertions** - Expected results, edge cases, error scenarios
-- **CORS debugging** - Production environment troubleshooting
+**What I Wrote/Designed:**
+- **Tree traversal algorithm design** - Chose BFS over DFS, designed cycle detection with visited set
+- **API endpoint business logic** - Validation rules, filtering logic, sorting implementation
+- **Filter state architecture** - Decided on URL sync pattern with useSearchParams
+- **Optimistic update strategy** - Designed UI-first approach with rollback on failure
+- **All test cases and assertions** - Determined expected results, edge cases (E7 cycle, idempotency)
+- **Troubleshooting and debugging** - Identified and fixed production CORS issues, deployment errors
 
-**Validation Process:**
-1. Tested all AI-generated code locally before committing
-2. Verified responses against exact spec requirements
-3. Ran full test suite (47 tests) to catch any issues
-4. Manually tested all user flows in both dev and production
-5. Checked API responses match spec format byte-for-byte
+**Research & Validation:**
+- **Official documentation:** Django REST Framework docs, React docs, Tailwind docs
+- **StackOverflow:** CORS configuration, pytest fixtures, Vite environment variables
+- **GitHub issues:** Render deployment troubleshooting, Vercel build errors
+- Tested all AI suggestions locally before accepting
+- Verified API responses match spec exactly (byte-for-byte)
+- Ran full test suite (47 tests) after every significant change
+- Manually tested all user flows in both dev and production
 
 **Tools Used:**
-- Claude (Anthropic) for code generation and technical consultation
-- GitHub Copilot for autocomplete suggestions (minimal usage)
+- **Claude (Anthropic)** - Primary assistant for code generation, debugging, and consultation
+- **GitHub Copilot** - Autocomplete suggestions (minimal usage)
+- **Official Documentation** - Django, DRF, React, Vite, Tailwind
+- **Community Resources** - StackOverflow, GitHub Issues
+
+**My Approach:**
+I used AI as a coding partner, not a replacement for thinking. Claude helped with boilerplate and syntax, while I focused on architecture decisions and algorithm design. Every AI suggestion was cross-checked against official documentation and tested thoroughly. When stuck (e.g., CORS errors), I researched StackOverflow and GitHub issues to understand the root cause, rather than just applying AI-suggested fixes blindly.
 
 ---
 
