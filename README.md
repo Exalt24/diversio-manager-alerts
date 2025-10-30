@@ -11,29 +11,55 @@ Full-stack manager alerts system with hierarchical employee tree traversal and r
 
 ## Setup & Run
 
-### Backend
+### Quick Start (Recommended)
+
+**Option 1: Using npm (works everywhere including Windows)**
+```bash
+npm run setup      # One-time setup
+npm run dev:backend    # Terminal 1
+npm run dev:frontend   # Terminal 2
+```
+
+**Option 2: Using bash scripts (Unix/Mac/Git Bash)**
+```bash
+./setup.sh    # One-time setup
+./run.sh      # Starts both servers
+```
+
+### Manual Setup (if preferred)
+
+**Backend:**
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate  # Windows: .\venv\Scripts\Activate.ps1
+source venv/bin/activate  # Windows PowerShell: .\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py load_seed_data
 python manage.py runserver
-# Server at http://127.0.0.1:8000
+# Server runs at http://127.0.0.1:8000
 ```
 
-### Frontend
+**Frontend:**
 ```bash
 cd frontend
 npm install
 npm run dev
-# App at http://localhost:5173
+# App runs at http://localhost:5173
 ```
 
 ---
 
 ## Tests
+
+**Quick:**
+```bash
+npm test              # Run all tests
+npm run test:backend  # Backend only
+npm run test:frontend # Frontend only
+```
+
+**Manual:**
 ```bash
 # Backend (28 tests)
 cd backend

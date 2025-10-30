@@ -1,0 +1,21 @@
+{
+  "name": "diversio-manager-alerts",
+  "version": "1.0.0",
+  "description": "Manager alerts dashboard with hierarchical tree traversal",
+  "scripts": {
+    "setup:backend": "cd backend && pip install -r requirements.txt && python manage.py migrate && python manage.py load_seed_data",
+    "setup:frontend": "cd frontend && npm install",
+    "setup": "npm run setup:backend && npm run setup:frontend",
+    "dev:backend": "cd backend && python manage.py runserver",
+    "dev:frontend": "cd frontend && npm run dev",
+    "test:backend": "cd backend && pytest -v",
+    "test:frontend": "cd frontend && npm test",
+    "test": "npm run test:backend && npm run test:frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Exalt24/diversio-manager-alerts"
+  },
+  "author": "Daniel Cruz <dcruz@up.edu.ph>",
+  "license": "UNLICENSED"
+}
