@@ -8,9 +8,13 @@
     "setup": "npm run setup:backend && npm run setup:frontend",
     "dev:backend": "cd backend && python manage.py runserver",
     "dev:frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\" --names \"BACKEND,FRONTEND\" --prefix-colors \"blue,magenta\"",
     "test:backend": "cd backend && pytest -v",
     "test:frontend": "cd frontend && npm test",
     "test": "npm run test:backend && npm run test:frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
   },
   "repository": {
     "type": "git",

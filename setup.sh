@@ -22,8 +22,14 @@ echo "✅ Frontend ready"
 cd ..
 
 echo ""
+echo "📦 Installing root dependencies..."
+npm install
+echo "✅ Root dependencies installed"
+
+echo ""
 echo "🎉 Setup complete!"
 echo ""
-echo "To start:"
-echo "  Bash/Mac/Linux: ./run.sh"
-echo "  Or manually: npm run dev:backend (terminal 1) + npm run dev:frontend (terminal 2)"
+echo "To start (choose one):"
+echo "  1. npm run dev        (one terminal, both servers)"
+echo "  2. ./run.sh           (bash script)"
+echo "  3. Manual (see README)"

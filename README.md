@@ -11,20 +11,40 @@ Full-stack manager alerts system with hierarchical employee tree traversal and r
 
 ## Setup & Run
 
-### Quick Start (Recommended)
+### Quick Start (One Command)
 
-**Option 1: Using npm (works everywhere including Windows)**
+**One-time setup:**
 ```bash
-npm run setup      # One-time setup
-npm run dev:backend    # Terminal 1
-npm run dev:frontend   # Terminal 2
+npm run setup
 ```
 
-**Option 2: Using bash scripts (Unix/Mac/Git Bash)**
+**Start both servers (one terminal):**
+```bash
+npm run dev
+```
+
+This runs both backend (http://127.0.0.1:8000) and frontend (http://localhost:5173) simultaneously.
+
+---
+
+### Alternative: Separate Terminals
+
+**Option 1: Using npm**
+```bash
+# Terminal 1
+npm run dev:backend
+
+# Terminal 2
+npm run dev:frontend
+```
+
+**Option 2: Using bash (Unix/Mac/Git Bash)**
 ```bash
 ./setup.sh    # One-time setup
-./run.sh      # Starts both servers
+./run.sh      # Starts both (single terminal with background jobs)
 ```
+
+---
 
 ### Manual Setup (if preferred)
 
@@ -37,7 +57,7 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py load_seed_data
 python manage.py runserver
-# Server runs at http://127.0.0.1:8000
+# Server at http://127.0.0.1:8000
 ```
 
 **Frontend:**
@@ -45,7 +65,29 @@ python manage.py runserver
 cd frontend
 npm install
 npm run dev
-# App runs at http://localhost:5173
+# App at http://localhost:5173
+```
+
+---
+
+## Tests
+
+**Quick:**
+```bash
+npm test              # All tests
+npm run test:backend  # Backend only (28 tests)
+npm run test:frontend # Frontend only (19 tests)
+```
+
+**Manual:**
+```bash
+# Backend
+cd backend
+pytest -v
+
+# Frontend
+cd frontend
+npm test
 ```
 
 ---
