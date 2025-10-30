@@ -594,6 +594,11 @@ diversio-manager-alerts/
 │   ├── package.json
 │   ├── vite.config.ts
 │   └── vitest.config.ts
+├── setup.sh (cross-platform setup script)
+├── run.sh (bash script to run both servers)
+├── package.json (root-level scripts for npm run dev)
+├── package-lock.json
+├── .gitignore
 └── README.md
 ```
 
