@@ -458,14 +458,24 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 
 ### What I'd Improve Next
 
-**1. Performance Optimization**
+**1. UI/UX Enhancements**
+- Light/dark theme toggle (currently dark theme only)
+- Micro-interactions and animations (smooth transitions, hover effects)
+- Better mobile responsive design (currently functional but could be more refined)
+- Data visualization dashboard (charts showing alert trends over time)
+- Keyboard shortcuts for power users (e.g., 'D' to dismiss, '/' to search)
+- Virtualized scrolling for large datasets (performance with 1000+ alerts)
+- More detailed loading states (skeleton matches exact content layout)
+- Improved empty state illustrations
+
+**2. Performance Optimization**
 - Add database indexes on `employee_id`, `reports_to_id`, `status`, `created_at`
 - Implement pagination (currently loads all alerts)
 - Cache subtree calculations with TTL (memoization)
 - Add database connection pooling for production
 - Optimize queries with `select_related`
 
-**2. Enhanced Features**
+**3. Enhanced Features**
 - Bulk actions (select multiple alerts to dismiss)
 - Alert details modal with full employee context
 - Filter presets (save common filter combinations)
@@ -473,7 +483,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 - Export filtered results to CSV
 - Alert snooze functionality
 
-**3. Testing & Monitoring**
+**4. Testing & Monitoring**
 - Add E2E tests with Playwright
 - Performance testing for large hierarchies (1000+ employees)
 - Frontend load time metrics with Lighthouse
@@ -481,14 +491,14 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 - Error tracking integration (e.g., Sentry)
 - Test coverage reporting
 
-**4. Code Organization**
+**5. Code Organization**
 - Extract filter logic into useReducer for complex state
 - Split AlertsPage into smaller focused components
 - Add React Query for API caching and optimistic updates
 - Create shared UI component library
 - Add Storybook for component documentation
 
-**5. Security & Scalability**
+**6. Security & Scalability**
 - Add authentication (JWT tokens or session-based)
 - Implement rate limiting on API endpoints
 - Add request validation middleware
@@ -518,10 +528,6 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 **5. Comprehensive Testing (47 vs 4 minimum)**
 - **Chose extensive coverage:** Confidence in refactoring, catches edge cases early
 - **Trade-off:** More upfront time, but saves debugging time and prevents regressions
-
-**6. Dark Theme Only**
-- **Chose single theme:** Consistent with Diversio's Optimo brand, simpler codebase
-- **Trade-off:** No light mode, but keeps styling maintainable
 
 ---
 
