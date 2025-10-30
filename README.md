@@ -285,15 +285,15 @@ Using seed data with 10 employees and 14 alerts:
 
 ## Time Spent and What I Cut
 
-**Total Time: ~4 hours**
+**Total Time: ~3.3 hours**
 
 **Breakdown:**
-- Setup & models: 30 min
-- Tree traversal algorithm + tests: 45 min
+- Setup & models: 5 min
+- Tree traversal algorithm + tests: 25 min
 - Backend API + comprehensive tests: 1 hour
-- Frontend core + filters: 1.5 hours
-- Deployment + CORS troubleshooting: 30 min
-- Documentation: 30 min
+- Frontend core + filters: 1 hour
+- Optimistic updates + polish: 30 min
+- Deployment + documentation: 30 min
 
 **What I Built:**
 - ✅ All core requirements (100%)
