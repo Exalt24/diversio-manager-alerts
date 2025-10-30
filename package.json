@@ -5,7 +5,8 @@
   "scripts": {
     "setup:backend": "cd backend && pip install -r requirements.txt && python manage.py migrate && python manage.py load_seed_data",
     "setup:frontend": "cd frontend && npm install",
-    "setup": "npm run setup:backend && npm run setup:frontend",
+    "setup": "npm install && npm run setup:backend && npm run setup:frontend",
+    "predev": "node -e \"const fs=require('fs');if(!fs.existsSync('frontend/node_modules')||!fs.existsSync('backend/venv')){console.error('\\n❌ Setup required! Run: npm run setup\\n');process.exit(1)}\" && npm install --silent",
     "dev:backend": "cd backend && python manage.py runserver",
     "dev:frontend": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\" --names \"BACKEND,FRONTEND\" --prefix-colors \"blue,magenta\"",

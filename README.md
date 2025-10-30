@@ -11,37 +11,44 @@ Full-stack manager alerts system with hierarchical employee tree traversal and r
 
 ## Setup & Run
 
-### Quick Start (One Command)
-
-**One-time setup:**
+### Quick Start (Recommended)
 ```bash
+# Clone the repository
+git clone https://github.com/Exalt24/diversio-manager-alerts.git
+cd diversio-manager-alerts
+
+# One-time setup (required)
 npm run setup
-```
 
-**Start both servers (one terminal):**
-```bash
+# Start both servers (one terminal)
 npm run dev
 ```
 
-This runs both backend (http://127.0.0.1:8000) and frontend (http://localhost:5173) simultaneously.
+**URLs:**
+- Backend: http://127.0.0.1:8000
+- Frontend: http://localhost:5173
+
+**Note:** `npm run dev` will auto-install root dependencies if missing, but you still need to run `npm run setup` once for backend/frontend dependencies.
 
 ---
 
 ### Alternative: Separate Terminals
 
-**Option 1: Using npm**
+If you prefer separate terminals:
 ```bash
-# Terminal 1
+# Terminal 1 - Backend
 npm run dev:backend
 
-# Terminal 2
+# Terminal 2 - Frontend
 npm run dev:frontend
 ```
 
-**Option 2: Using bash (Unix/Mac/Git Bash)**
+---
+
+### Alternative: Bash Scripts (Unix/Mac/Git Bash)
 ```bash
 ./setup.sh    # One-time setup
-./run.sh      # Starts both (single terminal with background jobs)
+./run.sh      # Starts both servers
 ```
 
 ---
@@ -74,29 +81,7 @@ npm run dev
 
 **Quick:**
 ```bash
-npm test              # All tests
-npm run test:backend  # Backend only (28 tests)
-npm run test:frontend # Frontend only (19 tests)
-```
-
-**Manual:**
-```bash
-# Backend
-cd backend
-pytest -v
-
-# Frontend
-cd frontend
-npm test
-```
-
----
-
-## Tests
-
-**Quick:**
-```bash
-npm test              # Run all tests
+npm test              # All tests (28 backend + 19 frontend)
 npm run test:backend  # Backend only
 npm run test:frontend # Frontend only
 ```
