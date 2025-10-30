@@ -52,34 +52,33 @@ npm test
 - ✅ **GET /api/alerts** with manager_id, scope (direct/subtree), severity, status, q filters
 - ✅ **POST /api/alerts/{id}/dismiss** - idempotent (returns 200 unchanged on repeat)
 - ✅ **Exact response format:** `{id, employee: {id, name}, severity, category, created_at, status}`
-- ✅ **Exact error format:** `{"detail": "invalid severity|status|scope"}` (400), `{"detail": "manager not found"}` (404)
-- ✅ **Tree traversal** with cycle detection (E6→E7→E8→E6 terminates without infinite loop)
+- ✅ **Exact error format:** `{"detail": "..."}` for 400/404
+- ✅ **Tree traversal** with cycle detection using visited set
 - ✅ **Sorting:** created_at DESC, id ASC
 - ✅ **Django + DRF** backend
-- ✅ **React + TypeScript** frontend (strict mode, no `any`)
-- ✅ **Table displays:** employee name, category, severity chip (color-coded), status, created_at
+- ✅ **React + TypeScript** frontend (strict mode)
+- ✅ **Table displays:** employee name, category, severity chip, status, created_at
 - ✅ **Scope toggle:** direct vs subtree (default: direct)
 - ✅ **Severity filter:** checkboxes for low/medium/high
 - ✅ **Employee search:** q parameter (case-insensitive)
 - ✅ **Dismiss button:** optimistic update with rollback on API failure
-- ✅ **Backend tests (minimum 2):** ✅ cycle prevention + ✅ idempotency
-- ✅ **Frontend tests (minimum 2):** ✅ high severity filter + ✅ optimistic rollback
+- ✅ **Backend tests (minimum 2):** cycle prevention + idempotency
+- ✅ **Frontend tests (minimum 2):** high severity filter + optimistic rollback
 
 ### Bonus ✅
-- ✅ **URL query param persistence** (explicitly mentioned bonus feature)
+- ✅ **URL query param persistence** (explicitly mentioned bonus)
 
-### Go Beyond ✅
-- Status filter (open/dismissed)
-- Manager ID input (test different managers)
-- Toast notifications (react-hot-toast)
+### Additional Features ✅
+- Frontend status filter UI (backend API required, but UI not in spec)
+- Manager ID input (easier testing)
+- Toast notifications (react-hot-toast instead of alerts)
 - Loading skeletons
 - Empty state component
 - Dark theme (Optimo-inspired)
-- 47 total tests (vs 4 minimum)
+- 43 extra tests (47 total vs 4 minimum)
 - Django admin panel
 - Health check endpoint
-- Production deployment (Vercel + Render)
-- Comprehensive documentation
+- Production deployment (optional in spec)
 
 ---
 
@@ -285,15 +284,15 @@ Using seed data with 10 employees and 14 alerts:
 
 ## Time Spent and What I Cut
 
-**Total Time: ~3.3 hours**
+**Total Time: ~3.5 hours**
 
 **Breakdown:**
-- Setup & models: 5 min
-- Tree traversal algorithm + tests: 25 min
+- Setup & models: 10 min
+- Tree traversal algorithm + tests: 30 min
 - Backend API + comprehensive tests: 1 hour
 - Frontend core + filters: 1 hour
 - Optimistic updates + polish: 30 min
-- Deployment + documentation: 30 min
+- Deployment + documentation: 40 min
 
 **What I Built:**
 - ✅ All core requirements (100%)
