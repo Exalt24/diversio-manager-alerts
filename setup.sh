@@ -11,6 +11,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py load_seed_data
+deactivate
 echo "✅ Backend ready"
 cd ..
 
@@ -30,6 +31,7 @@ echo ""
 echo "🎉 Setup complete!"
 echo ""
 echo "To start (choose one):"
-echo "  1. npm run dev        (one terminal, both servers)"
-echo "  2. ./run.sh           (bash script)"
-echo "  3. Manual (see README)"
+echo "  Windows:      npm run dev"
+echo "  Mac/Linux:    npm run dev:unix"
+echo "  Bash script:  ./run.sh"
+echo "  Manual:       See README"
