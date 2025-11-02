@@ -3,6 +3,7 @@
 Full-stack manager alerts system with hierarchical employee tree traversal and real-time filtering.
 
 **Live Demo:**
+
 - Frontend: https://diversio-manager-alerts.vercel.app
 - Backend API: https://diversio-alerts-api.onrender.com/api
 - Health Check: https://diversio-alerts-api.onrender.com/api/health
@@ -12,6 +13,7 @@ Full-stack manager alerts system with hierarchical employee tree traversal and r
 ## Setup & Run
 
 ### Quick Start (Recommended)
+
 ```bash
 # Clone the repository
 git clone https://github.com/Exalt24/diversio-manager-alerts.git
@@ -21,20 +23,25 @@ cd diversio-manager-alerts
 npm run setup
 
 # Start both servers (one terminal)
-npm run dev
+npm run dev          # Windows PowerShell/CMD
+npm run dev:unix     # Mac/Linux/Git Bash
 ```
 
 **URLs:**
+
 - Backend: http://127.0.0.1:8000
 - Frontend: http://localhost:5173
 
-**Note:** `npm run dev` will auto-install root dependencies if missing, but you still need to run `npm run setup` once for backend/frontend dependencies.
+**Note:** `npm run dev` automatically checks if setup was run and uses the virtual environment without manual activation. You can close and reopen VS Code anytime - no need to reactivate venv when using npm scripts.
 
 ---
 
 ### Alternative: Separate Terminals
 
 If you prefer separate terminals:
+
+**Windows PowerShell/CMD:**
+
 ```bash
 # Terminal 1 - Backend
 npm run dev:backend
@@ -43,9 +50,20 @@ npm run dev:backend
 npm run dev:frontend
 ```
 
+**Mac/Linux/Git Bash:**
+
+```bash
+# Terminal 1 - Backend
+npm run dev:backend:unix
+
+# Terminal 2 - Frontend
+npm run dev:frontend
+```
+
 ---
 
 ### Alternative: Bash Scripts (Unix/Mac/Git Bash)
+
 ```bash
 ./setup.sh    # One-time setup
 ./run.sh      # Starts both servers
@@ -56,18 +74,35 @@ npm run dev:frontend
 ### Manual Setup (if preferred)
 
 **Backend:**
+
 ```bash
 cd backend
+
+# Create virtual environment
 python -m venv venv
-source venv/bin/activate  # Windows PowerShell: .\venv\Scripts\Activate.ps1
+
+# Activate virtual environment (required for manual commands)
+# Windows PowerShell
+.\venv\Scripts\Activate.ps1
+
+# Windows CMD
+.\venv\Scripts\activate.bat
+
+# Mac/Linux/Git Bash
+source venv/bin/activate
+
+# Install dependencies and setup
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py load_seed_data
+
+# Start server
 python manage.py runserver
 # Server at http://127.0.0.1:8000
 ```
 
 **Frontend:**
+
 ```bash
 cd frontend
 npm install
@@ -75,21 +110,34 @@ npm run dev
 # App at http://localhost:5173
 ```
 
+**Important:** If using manual commands, you must activate the virtual environment **every time you open a new terminal**. The npm scripts handle this automatically by using the venv Python directly.
+
 ---
 
 ## Tests
 
 **Quick:**
+
 ```bash
-npm test              # All tests (28 backend + 19 frontend)
-npm run test:backend  # Backend only
-npm run test:frontend # Frontend only
+npm test                  # All tests (Windows)
+npm run test:backend      # Backend only (Windows)
+npm run test:backend:unix # Backend only (Mac/Linux)
+npm run test:frontend     # Frontend only
 ```
 
+**Note:** `npm test` automatically checks if setup was run before executing tests.
+
 **Manual:**
+
 ```bash
-# Backend (28 tests)
+# Backend (28 tests) - Windows PowerShell
 cd backend
+.\venv\Scripts\Activate.ps1
+pytest -v
+
+# Backend (28 tests) - Mac/Linux/Git Bash
+cd backend
+source venv/bin/activate
 pytest -v
 
 # Frontend (19 tests)
@@ -102,6 +150,7 @@ npm test
 ## Requirements Checklist
 
 ### Core Requirements ✅
+
 - ✅ **GET /api/alerts** with manager_id, scope (direct/subtree), severity, status, q filters
 - ✅ **POST /api/alerts/{id}/dismiss** - idempotent (returns 200 unchanged on repeat)
 - ✅ **Exact response format:** `{id, employee: {id, name}, severity, category, created_at, status}`
@@ -119,9 +168,11 @@ npm test
 - ✅ **Frontend tests (minimum 2):** high severity filter + optimistic rollback
 
 ### Bonus ✅
+
 - ✅ **URL query param persistence** (explicitly mentioned bonus)
 
 ### Additional Features ✅
+
 - Frontend status filter UI (backend API required, but UI not in spec)
 - Manager ID input (easier testing)
 - Toast notifications (react-hot-toast instead of alerts)
@@ -142,6 +193,7 @@ npm test
 Query all alerts for a manager's reports with filtering.
 
 **Query Parameters:**
+
 - `manager_id` (required): Manager employee ID
 - `scope` (optional): `direct` (default) | `subtree`
 - `severity` (optional): Comma-separated `low,medium,high`
@@ -149,6 +201,7 @@ Query all alerts for a manager's reports with filtering.
 - `q` (optional): Employee name search (case-insensitive)
 
 **Response (200):**
+
 ```json
 [
   {
@@ -163,10 +216,12 @@ Query all alerts for a manager's reports with filtering.
 ```
 
 **Errors:**
+
 - `400`: `{"detail": "invalid severity"}` | `{"detail": "invalid status"}` | `{"detail": "invalid scope"}`
 - `404`: `{"detail": "manager not found"}`
 
 **Examples:**
+
 ```bash
 # Direct reports only
 GET /api/alerts?manager_id=E2&scope=direct
@@ -185,6 +240,7 @@ GET /api/alerts?manager_id=E2&q=Jordan
 Dismiss an alert. Idempotent - dismissing an already-dismissed alert returns 200 with unchanged resource.
 
 **Response (200):**
+
 ```json
 {
   "id": "A1",
@@ -197,6 +253,7 @@ Dismiss an alert. Idempotent - dismissing an already-dismissed alert returns 200
 ```
 
 **Errors:**
+
 - `404`: `{"detail": "alert not found"}`
 
 ---
@@ -206,6 +263,7 @@ Dismiss an alert. Idempotent - dismissing an already-dismissed alert returns 200
 Health check endpoint (Go Beyond feature).
 
 **Response (200):**
+
 ```json
 {
   "status": "healthy",
@@ -224,6 +282,7 @@ Health check endpoint (Go Beyond feature).
 **Function:** `get_employee_subtree(manager_id: str, scope: str) -> Set[str]`
 
 **Implementation:**
+
 - **Algorithm:** BFS (Breadth-First Search) with visited set
 - **Time Complexity:** O(n) where n = number of employees
 - **Space Complexity:** O(n) for visited set and queue
@@ -231,32 +290,34 @@ Health check endpoint (Go Beyond feature).
 - **Manager Exclusion:** Manager never included in result set
 
 **Pseudocode:**
+
 ```python
 def get_employee_subtree(manager_id: str, scope: str) -> Set[str]:
     if scope == "direct":
         # Simple query for direct reports
         return {e.id for e in Employee.objects.filter(reports_to_id=manager_id)}
-    
+
     # BFS for full subtree
     visited = set()
     queue = [manager_id]
-    
+
     while queue:
         current = queue.pop(0)
         if current in visited:
             continue  # Cycle detected, skip
         visited.add(current)
-        
+
         # Add all direct reports to queue
         reports = Employee.objects.filter(reports_to_id=current)
         queue.extend(r.id for r in reports)
-    
+
     # Remove manager from results
     visited.discard(manager_id)
     return visited
 ```
 
 ### Data Model
+
 ```python
 Employee:
   - id: CharField (PK)
@@ -270,12 +331,13 @@ Alert:
   - category: CharField
   - created_at: DateTimeField
   - status: CharField (choices: open, dismissed, default: open)
-  
+
   Meta:
     ordering: ['-created_at', 'id']
 ```
 
 ### Frontend Architecture
+
 ```
 src/
 ├── components/
@@ -294,6 +356,7 @@ src/
 ```
 
 **Key Patterns:**
+
 - **Optimistic Updates:** Immediate UI update → API call → Revert on failure
 - **URL State Sync:** react-router-dom `useSearchParams` for shareable filtered views
 - **Error Handling:** Try-catch with toast notifications, error boundaries for render errors
@@ -306,6 +369,7 @@ src/
 Using seed data with 10 employees and 14 alerts:
 
 ### Manager E2 Direct Reports
+
 - **Employees:** E3, E4, E9
 - **Alerts:** 6 total
   - High: 2 (A1, A11)
@@ -313,6 +377,7 @@ Using seed data with 10 employees and 14 alerts:
   - Low: 2 (A7, A12)
 
 ### Manager E2 Full Subtree
+
 - **Employees:** E3, E4, E5, E9, E10
 - **Alerts:** 10 total
   - High: 4 (A1, A4, A6, A11)
@@ -320,16 +385,19 @@ Using seed data with 10 employees and 14 alerts:
   - Low: 3 (A3, A7, A12)
 
 ### Manager E2 Subtree + Filters
+
 - **open + high:** 3 alerts (A1, A4, A11)
 - **Status defaults to all:** Includes both open and dismissed
 
 ### Manager E7 (Cycle Test)
+
 - **Cycle:** E6→E7→E8→E6
 - **Employees in subtree:** E6, E8
 - **Alerts:** 2 (A8, A10)
 - **Behavior:** Algorithm terminates without infinite loop ✅
 
 ### Idempotency Test
+
 - **First dismiss:** Returns 200 with `status: "dismissed"`
 - **Second dismiss:** Returns 200 with unchanged resource ✅
 
@@ -340,6 +408,7 @@ Using seed data with 10 employees and 14 alerts:
 **Total Time: ~3.5 hours**
 
 **Breakdown:**
+
 - Setup & models: 10 min
 - Tree traversal algorithm + tests: 30 min
 - Backend API + comprehensive tests: 1 hour
@@ -348,6 +417,7 @@ Using seed data with 10 employees and 14 alerts:
 - Deployment + documentation: 40 min
 
 **What I Built:**
+
 - ✅ All core requirements (100%)
 - ✅ Bonus feature (URL params)
 - ✅ 47 tests (28 backend + 19 frontend vs 4 minimum)
@@ -357,6 +427,7 @@ Using seed data with 10 employees and 14 alerts:
 - ✅ Comprehensive documentation
 
 **What I Cut for Time:**
+
 - User authentication system
 - Bulk actions (select and dismiss multiple)
 - Email notifications for high-severity alerts
@@ -367,6 +438,7 @@ Using seed data with 10 employees and 14 alerts:
 - Export to CSV
 
 **What I Added Beyond Requirements:**
+
 - Status filter (open/dismissed) - useful for real-world use
 - Manager ID input - easier to test different managers
 - Toast notifications - better UX than browser alerts
@@ -381,8 +453,9 @@ Using seed data with 10 employees and 14 alerts:
 ## How I Used AI/LLMs
 
 **What AI Helped With:**
+
 - Django project boilerplate and settings configuration
-- TypeScript type definitions and interfaces  
+- TypeScript type definitions and interfaces
 - Tailwind CSS styling and dark theme classes
 - Test case structure and pytest fixtures
 - Deployment configuration (build.sh, environment variables)
@@ -391,6 +464,7 @@ Using seed data with 10 employees and 14 alerts:
 - Debugging suggestions for CORS and deployment issues
 
 **What I Wrote/Designed:**
+
 - **Tree traversal algorithm design** - Chose BFS over DFS, designed cycle detection with visited set
 - **API endpoint business logic** - Validation rules, filtering logic, sorting implementation
 - **Filter state architecture** - Decided on URL sync pattern with useSearchParams
@@ -399,6 +473,7 @@ Using seed data with 10 employees and 14 alerts:
 - **Troubleshooting and debugging** - Identified and fixed production CORS issues, deployment errors
 
 **Research & Validation:**
+
 - **Official documentation:** Django REST Framework docs, React docs, Tailwind docs
 - **StackOverflow:** CORS configuration, pytest fixtures, Vite environment variables
 - **GitHub issues:** Render deployment troubleshooting, Vercel build errors
@@ -408,6 +483,7 @@ Using seed data with 10 employees and 14 alerts:
 - Manually tested all user flows in both dev and production
 
 **Tools Used:**
+
 - **Claude (Anthropic)** - Primary assistant for code generation, debugging, and consultation
 - **GitHub Copilot** - Autocomplete suggestions (minimal usage)
 - **Official Documentation** - Django, DRF, React, Vite, Tailwind
@@ -423,18 +499,21 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 ### Why This Solution is Good
 
 **1. Exact Spec Compliance**
+
 - Response format matches exactly (nested employee object)
 - Error messages use exact wording: `{"detail": "invalid severity"}`
 - Sorting verified: created_at DESC, id ASC
 - All expected results match specification exactly
 
 **2. Algorithm Correctness**
+
 - BFS with visited set elegantly handles cycles
 - O(n) time and space complexity (optimal)
 - Tested with real cycle in seed data (E6→E7→E8)
 - Manager never included in results (explicitly tested)
 
 **3. Production-Ready Code**
+
 - 47 comprehensive tests (28 backend + 19 frontend vs 4 minimum)
 - TypeScript strict mode with no `any` types
 - Python type hints throughout backend
@@ -443,6 +522,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 - Logging with rotation for production monitoring
 
 **4. User Experience Excellence**
+
 - Optimistic updates for instant feedback
 - Toast notifications (better than browser alerts)
 - Loading skeletons prevent layout shift
@@ -451,6 +531,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 - Dark theme with full accessibility (ARIA, semantic HTML, keyboard nav)
 
 **5. Engineering Judgment**
+
 - Clean separation of concerns (utils, services, hooks)
 - Reusable components (filters, table, skeletons)
 - Comprehensive error boundaries
@@ -459,6 +540,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 ### What I'd Improve Next
 
 **1. UI/UX Enhancements**
+
 - Light/dark theme toggle (currently dark theme only)
 - Micro-interactions and animations (smooth transitions, hover effects)
 - Better mobile responsive design (currently functional but could be more refined)
@@ -469,6 +551,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 - Improved empty state illustrations
 
 **2. Performance Optimization**
+
 - Add database indexes on `employee_id`, `reports_to_id`, `status`, `created_at`
 - Implement pagination (currently loads all alerts)
 - Cache subtree calculations with TTL (memoization)
@@ -476,6 +559,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 - Optimize queries with `select_related`
 
 **3. Enhanced Features**
+
 - Bulk actions (select multiple alerts to dismiss)
 - Alert details modal with full employee context
 - Filter presets (save common filter combinations)
@@ -484,6 +568,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 - Alert snooze functionality
 
 **4. Testing & Monitoring**
+
 - Add E2E tests with Playwright
 - Performance testing for large hierarchies (1000+ employees)
 - Frontend load time metrics with Lighthouse
@@ -492,6 +577,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 - Test coverage reporting
 
 **5. Code Organization**
+
 - Extract filter logic into useReducer for complex state
 - Split AlertsPage into smaller focused components
 - Add React Query for API caching and optimistic updates
@@ -499,6 +585,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 - Add Storybook for component documentation
 
 **6. Security & Scalability**
+
 - Add authentication (JWT tokens or session-based)
 - Implement rate limiting on API endpoints
 - Add request validation middleware
@@ -510,22 +597,27 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 ## Technical Trade-offs
 
 **1. BFS vs DFS for Tree Traversal**
+
 - **Chose BFS:** More intuitive for organizational hierarchies, easier to visualize levels
 - **Trade-off:** Slightly more memory (queue vs call stack) but better debuggability
 
 **2. SQLite (dev) vs PostgreSQL (prod)**
+
 - **Chose hybrid:** SQLite for fast local iteration, PostgreSQL for production reliability
 - **Trade-off:** Must test both environments, but worth the development speed
 
 **3. Optimistic Updates vs Wait for API**
+
 - **Chose optimistic:** Instant feedback, perceived performance boost
 - **Trade-off:** More complex error handling (rollback logic), but UX significantly better
 
 **4. URL Query Params vs Local State**
+
 - **Chose URL sync:** Shareable links, browser back/forward support, bookmark-able
 - **Trade-off:** More complex state management, but huge usability win
 
 **5. Comprehensive Testing (47 vs 4 minimum)**
+
 - **Chose extensive coverage:** Confidence in refactoring, catches edge cases early
 - **Trade-off:** More upfront time, but saves debugging time and prevents regressions
 
@@ -534,6 +626,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 ## Technical Stack
 
 **Backend:**
+
 - Django 5.2 + Django REST Framework 3.16
 - Python 3.13
 - PostgreSQL (production) / SQLite (dev)
@@ -542,6 +635,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 - django-cors-headers 4.9
 
 **Frontend:**
+
 - React 19 + TypeScript 5.x (strict mode)
 - Vite 6.x (build tool)
 - Tailwind CSS v4 (via @tailwindcss/vite plugin)
@@ -550,6 +644,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 - Vitest + Testing Library (testing)
 
 **Deployment:**
+
 - Frontend: Vercel (serverless)
 - Backend: Render (free tier with managed PostgreSQL)
 - CORS: Configured for production domains
@@ -557,6 +652,7 @@ I used AI as a coding partner, not a replacement for thinking. Claude helped wit
 ---
 
 ## Project Structure
+
 ```
 diversio-manager-alerts/
 ├── backend/
