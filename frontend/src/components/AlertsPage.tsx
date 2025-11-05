@@ -10,7 +10,8 @@ import type { Alert } from "../types";
 
 export function AlertsPage() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [refetching, setRefetching] = useState(false);
   const { filters, updateFilters } = useFilters();
   const [showFilters, setShowFilters] = useState(false);
 
@@ -20,7 +21,13 @@ export function AlertsPage() {
 
   const fetchAlerts = useCallback(async () => {
     try {
-      setLoading(true);
+      // Only show skeleton on initial load, not on filter changes
+      if (initialLoading) {
+        setInitialLoading(true);
+      } else {
+        setRefetching(true);
+      }
+
       const data = await ApiClient.getAlerts(filters);
       setAlerts(data);
     } catch (error) {
@@ -28,9 +35,10 @@ export function AlertsPage() {
         error instanceof Error ? error.message : "Failed to fetch alerts"
       );
     } finally {
-      setLoading(false);
+      setInitialLoading(false);
+      setRefetching(false);
     }
-  }, [filters]);
+  }, [filters, initialLoading]);
 
   useEffect(() => {
     fetchAlerts();
@@ -38,7 +46,6 @@ export function AlertsPage() {
 
   const handleDismiss = async (alertId: string) => {
     const originalAlerts = [...alerts];
-
     setAlerts((prev) =>
       prev.map((alert) =>
         alert.id === alertId
@@ -58,7 +65,8 @@ export function AlertsPage() {
     }
   };
 
-  if (loading) {
+  // Only show skeleton on initial page load
+  if (initialLoading) {
     return <LoadingSkeleton />;
   }
 
@@ -81,7 +89,6 @@ export function AlertsPage() {
               className="bg-[#0f172b] text-white px-6 py-2 my-4 rounded-md hover:bg-[#1d293d]"
               onClick={toggleFilters}
             >
-              {" "}
               {showFilters ? "Hide Filters" : "Show Filters"}
             </button>
           </div>
@@ -95,8 +102,11 @@ export function AlertsPage() {
           <EmptyState />
         ) : (
           <>
-            <div className="mb-4 text-sm text-slate-400">
+            <div className="mb-4 text-sm text-slate-400 flex items-center gap-2">
               Showing {alerts.length} {alerts.length === 1 ? "alert" : "alerts"}
+              {refetching && (
+                <span className="text-blue-400 text-xs">(updating...)</span>
+              )}
             </div>
             <div className="bg-slate-900 rounded-lg shadow-xl overflow-hidden border border-slate-800">
               <AlertsTable alerts={alerts} onDismiss={handleDismiss} />
