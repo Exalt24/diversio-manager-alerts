@@ -6,14 +6,11 @@ from .models import Employee
 def get_employee_subtree(manager_id: str, scope: str) -> Set[str]:
     """
     Returns set of employee IDs under a manager (excluding manager).
-
     Args:
         manager_id: The manager's employee ID
         scope: "direct" for direct reports only, "subtree" for full tree
-
     Returns:
         Set of employee IDs (excluding manager_id)
-
     Time Complexity: O(n) where n is number of employees
     Space Complexity: O(n) for visited set and queue
     """

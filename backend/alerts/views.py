@@ -12,7 +12,7 @@ from .utils import get_employee_subtree
 logger = logging.getLogger("alerts")
 
 
-@api_view(["GET"])
+@api_view(["GET", "HEAD"])
 def health_check(request):
     """
     Health check endpoint for monitoring.
